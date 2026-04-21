@@ -21,6 +21,9 @@
 ## 👤 Cadastro de Pacientes
 ![Pacientes](static/img/pacientes.png)
 
+## 👤 Envio de Email
+![Email](static/img/email.png)
+
 
 # 🏥 Sistema de Gestão de Clínica Médica (SGHSS)
 

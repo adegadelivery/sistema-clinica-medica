@@ -1,3 +1,27 @@
+# 📸 Imagens do Sistema
+
+## 🏠 Tela Inicial
+![Home](static/img/home.png)
+
+## 🔐 Tela de Login
+![Login](static/img/login.png)
+
+## 📧 Confirmação de Email
+![Email](static/img/email.png)
+
+## 📋 Menu Principal
+![Menu](static/img/menu.png)
+
+## 📅 Agendamento de Consulta
+![Agendar](static/img/agendar.png)
+
+## 📊 Lista de Consultas
+![Consultas](static/img/consultas.png)
+
+## 👤 Cadastro de Pacientes
+![Pacientes](static/img/pacientes.png)
+
+
 # 🏥 Sistema de Gestão de Clínica Médica (SGHSS)
 
 ## 👨‍💻 Grupo de Projeto Integrador (PI)

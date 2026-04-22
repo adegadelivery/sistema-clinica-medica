@@ -1,11 +1,13 @@
+import os
 from flask import Flask, render_template, redirect, request, session
 from extensions import db
 
 app = Flask(__name__)
-app.secret_key = "123"
+app.secret_key = os.environ.get("SECRET_KEY", "123")
 
 # 📌 Banco de dados
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite3"
+# Em produção usa DATABASE_URL (Railway/PostgreSQL), localmente usa SQLite
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///db.sqlite3")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
@@ -99,4 +101,4 @@ with app.app_context():
 # =========================
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.environ.get("FLASK_DEBUG", "false").lower() == "true")

@@ -7,9 +7,11 @@ app.secret_key = os.environ.get("SECRET_KEY", "123")
 
 # 📌 Banco de dados
 # Em produção usa DATABASE_URL (Railway/PostgreSQL), localmente usa SQLite
-# Corrige prefixo antigo "postgres://" → "postgresql://" exigido pelo SQLAlchemy 2.x
-database_url = os.environ.get("DATABASE_URL", "sqlite:///db.sqlite3")
-if database_url.startswith("postgres://"):
+# Se DATABASE_URL vier vazio ou ausente, usa SQLite como fallback
+database_url = os.environ.get("DATABASE_URL", "").strip()
+if not database_url:
+    database_url = "sqlite:///db.sqlite3"
+elif database_url.startswith("postgres://"):
     database_url = database_url.replace("postgres://", "postgresql://", 1)
 app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

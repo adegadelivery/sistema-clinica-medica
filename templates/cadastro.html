@@ -1,197 +1,95 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro — Clínica Médica</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Cadastro</title>
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: #f4f6f9;
+            font-family: Arial;
+        }
+
+        .box {
+            width: 350px;
+            margin: 60px auto;
+            background: white;
             padding: 20px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px 36px;
-            width: 420px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border-radius: 10px;
             text-align: center;
-        }
-
-        .logo {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(99,179,237,0.5);
-            margin-bottom: 14px;
-        }
-
-        h2 {
-            color: #fff;
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .subtitle {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.85rem;
-            margin-bottom: 26px;
-        }
-
-        .alert {
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            margin-bottom: 16px;
-            text-align: left;
-        }
-        .alert-danger  { background: rgba(220,53,69,0.2);  border: 1px solid rgba(220,53,69,0.4);  color: #ff6b6b; }
-        .alert-success { background: rgba(40,167,69,0.2);  border: 1px solid rgba(40,167,69,0.4);  color: #51cf66; }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-            text-align: left;
-        }
-
-        label {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: block;
-            margin-bottom: 6px;
+            box-shadow: 0px 0px 10px #ccc;
         }
 
         input {
-            width: 100%;
-            padding: 12px 14px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 0.9rem;
-            font-family: 'Inter', sans-serif;
-            transition: border-color 0.2s, background 0.2s;
-            outline: none;
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
         }
 
-        input::placeholder { color: rgba(255,255,255,0.3); }
-        input:focus {
-            border-color: #63b3ed;
-            background: rgba(255,255,255,0.12);
-        }
-
-        .btn-cadastrar {
-            width: 100%;
-            padding: 13px;
-            background: linear-gradient(135deg, #10b981, #059669);
+        button {
+            width: 95%;
+            padding: 10px;
+            background: #3498db;
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
             cursor: pointer;
-            margin-top: 8px;
-            transition: opacity 0.2s, transform 0.1s;
         }
 
-        .btn-cadastrar:hover { opacity: 0.9; transform: translateY(-1px); }
-        .btn-cadastrar:active { transform: translateY(0); }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 20px 0;
+        .alerta {
+            background: #f8d7da;
+            color: #842029;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 8px 0;
+            font-size: 14px;
         }
-        .divider hr { flex: 1; border: none; border-top: 1px solid rgba(255,255,255,0.1); }
-        .divider span { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+
+        .alerta-sucesso {
+            background: #d1e7dd;
+            color: #0f5132;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 8px 0;
+            font-size: 14px;
+        }
 
         .link-login {
-            color: #63b3ed;
+            display: block;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #3498db;
             text-decoration: none;
-            font-size: 0.88rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .link-login:hover { color: #90cdf4; }
-
-        .requisito {
-            color: rgba(255,255,255,0.3);
-            font-size: 0.75rem;
-            text-align: left;
-            margin-top: 4px;
         }
     </style>
 </head>
+
 <body>
 
-<div class="card">
-    <img src="{{ url_for('static', filename='img/logo.jpg') }}" class="logo" alt="Logo Clínica">
+<div class="box">
+
+    <img src="{{ url_for('static', filename='img/logo.jpg') }}"
+         style="width: 100px; margin-bottom: 10px;">
+
     <h2>Criar Conta</h2>
-    <p class="subtitle">Preencha os dados para se cadastrar</p>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">{{ message }}</div>
+            <div class="{% if category == 'success' %}alerta-sucesso{% else %}alerta{% endif %}">
+                {{ message }}
+            </div>
         {% endfor %}
     {% endwith %}
 
     <form method="POST">
-        <div class="form-group">
-            <label for="nome">Nome Completo</label>
-            <input id="nome" name="nome" placeholder="Seu nome completo" required>
-        </div>
-
-        <div class="form-group">
-            <label for="email">E-mail</label>
-            <input id="email" name="email" type="email" placeholder="seu@email.com" required>
-        </div>
-
-        <div class="form-group">
-            <label for="usuario">Nome de Usuário</label>
-            <input id="usuario" name="usuario" placeholder="Ex: joao.silva" required>
-            <p class="requisito">Será usado para fazer login</p>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label for="senha">Senha</label>
-                <input id="senha" name="senha" type="password" placeholder="Mínimo 6 caracteres" minlength="6" required>
-            </div>
-            <div class="form-group">
-                <label for="confirmar">Confirmar Senha</label>
-                <input id="confirmar" name="confirmar" type="password" placeholder="Repita a senha" required>
-            </div>
-        </div>
-
-        <button type="submit" class="btn-cadastrar">Criar Conta</button>
+        <input name="nome" placeholder="Nome Completo">
+        <input name="email" type="email" placeholder="E-mail">
+        <input name="usuario" placeholder="Usuário">
+        <input name="senha" type="password" placeholder="Senha">
+        <input name="confirmar" type="password" placeholder="Confirmar Senha">
+        <button>Cadastrar</button>
     </form>
 
-    <div class="divider">
-        <hr><span>ou</span><hr>
-    </div>
-
     <a href="/login" class="link-login">Já tem conta? Faça login</a>
+
 </div>
 
 </body>

@@ -53,16 +53,21 @@ def agendar():
         db.session.add(consulta)
         db.session.commit()
 
-        paciente = Paciente.query.get(request.form["paciente_id"])
-        medico = Medico.query.get(request.form["medico_id"])
+        # Envia email (falha silenciosa para não travar o agendamento)
+        try:
+            paciente = db.session.get(Paciente, int(request.form["paciente_id"]))
+            medico   = db.session.get(Medico,   int(request.form["medico_id"]))
 
-        enviar_email(
-            paciente.email,
-            paciente.nome,
-            consulta.data,
-            consulta.hora,
-            medico.nome
-        )
+            if paciente and paciente.email:
+                enviar_email(
+                    paciente.email,
+                    paciente.nome,
+                    consulta.data,
+                    consulta.hora,
+                    medico.nome if medico else ""
+                )
+        except Exception as e:
+            print("[EMAIL] Erro ao enviar email:", e)
 
         return redirect("/consultas")
 
@@ -73,10 +78,10 @@ def agendar():
 @consulta_bp.route("/cancelar/<int:id>")
 def cancelar(id):
 
-    consulta = Consulta.query.get(id)
-    consulta.status = "Cancelada"
-
-    db.session.commit()
+    consulta = db.session.get(Consulta, id)
+    if consulta:
+        consulta.status = "Cancelada"
+        db.session.commit()
 
     return redirect("/consultas")
 
@@ -85,7 +90,7 @@ def cancelar(id):
 @consulta_bp.route("/reagendar/<int:id>", methods=["GET", "POST"])
 def reagendar(id):
 
-    consulta = Consulta.query.get(id)
+    consulta = db.session.get(Consulta, id)
 
     if request.method == "POST":
 

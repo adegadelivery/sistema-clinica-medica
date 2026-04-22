@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login — Clínica Médica</title>
+    <title>Cadastro — Clínica Médica</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,6 +15,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
 
         .card {
@@ -23,23 +24,23 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 40px 36px;
-            width: 380px;
+            width: 420px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.4);
             text-align: center;
         }
 
         .logo {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid rgba(99,179,237,0.5);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         h2 {
             color: #fff;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 4px;
         }
@@ -47,7 +48,7 @@
         .subtitle {
             color: rgba(255,255,255,0.5);
             font-size: 0.85rem;
-            margin-bottom: 28px;
+            margin-bottom: 26px;
         }
 
         .alert {
@@ -57,8 +58,14 @@
             margin-bottom: 16px;
             text-align: left;
         }
-        .alert-danger { background: rgba(220,53,69,0.2); border: 1px solid rgba(220,53,69,0.4); color: #ff6b6b; }
-        .alert-success { background: rgba(40,167,69,0.2); border: 1px solid rgba(40,167,69,0.4); color: #51cf66; }
+        .alert-danger  { background: rgba(220,53,69,0.2);  border: 1px solid rgba(220,53,69,0.4);  color: #ff6b6b; }
+        .alert-success { background: rgba(40,167,69,0.2);  border: 1px solid rgba(40,167,69,0.4);  color: #51cf66; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
 
         .form-group {
             margin-bottom: 14px;
@@ -92,10 +99,10 @@
             background: rgba(255,255,255,0.12);
         }
 
-        button {
+        .btn-cadastrar {
             width: 100%;
             padding: 13px;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             border: none;
             border-radius: 10px;
@@ -107,8 +114,8 @@
             transition: opacity 0.2s, transform 0.1s;
         }
 
-        button:hover { opacity: 0.9; transform: translateY(-1px); }
-        button:active { transform: translateY(0); }
+        .btn-cadastrar:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-cadastrar:active { transform: translateY(0); }
 
         .divider {
             display: flex;
@@ -119,22 +126,29 @@
         .divider hr { flex: 1; border: none; border-top: 1px solid rgba(255,255,255,0.1); }
         .divider span { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
 
-        .link-cadastro {
+        .link-login {
             color: #63b3ed;
             text-decoration: none;
             font-size: 0.88rem;
             font-weight: 500;
             transition: color 0.2s;
         }
-        .link-cadastro:hover { color: #90cdf4; }
+        .link-login:hover { color: #90cdf4; }
+
+        .requisito {
+            color: rgba(255,255,255,0.3);
+            font-size: 0.75rem;
+            text-align: left;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
 
 <div class="card">
     <img src="{{ url_for('static', filename='img/logo.jpg') }}" class="logo" alt="Logo Clínica">
-    <h2>Clínica Médica</h2>
-    <p class="subtitle">Faça login para continuar</p>
+    <h2>Criar Conta</h2>
+    <p class="subtitle">Preencha os dados para se cadastrar</p>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% for category, message in messages %}
@@ -144,21 +158,40 @@
 
     <form method="POST">
         <div class="form-group">
-            <label for="usuario">Usuário</label>
-            <input id="usuario" name="usuario" placeholder="Digite seu usuário" required>
+            <label for="nome">Nome Completo</label>
+            <input id="nome" name="nome" placeholder="Seu nome completo" required>
         </div>
+
         <div class="form-group">
-            <label for="senha">Senha</label>
-            <input id="senha" name="senha" type="password" placeholder="Digite sua senha" required>
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" placeholder="seu@email.com" required>
         </div>
-        <button type="submit">Entrar</button>
+
+        <div class="form-group">
+            <label for="usuario">Nome de Usuário</label>
+            <input id="usuario" name="usuario" placeholder="Ex: joao.silva" required>
+            <p class="requisito">Será usado para fazer login</p>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input id="senha" name="senha" type="password" placeholder="Mínimo 6 caracteres" minlength="6" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmar">Confirmar Senha</label>
+                <input id="confirmar" name="confirmar" type="password" placeholder="Repita a senha" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-cadastrar">Criar Conta</button>
     </form>
 
     <div class="divider">
         <hr><span>ou</span><hr>
     </div>
 
-    <a href="/cadastro" class="link-cadastro">Não tem conta? Cadastre-se aqui</a>
+    <a href="/login" class="link-login">Já tem conta? Faça login</a>
 </div>
 
 </body>
